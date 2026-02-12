@@ -36,7 +36,7 @@ export default function Header() {
         {/* Logo */}
         <a href="#" className="flex items-center gap-3 group">
           <img
-            src={getPublicBasePath("/logo.svg")}
+            src={getPublicBasePath("/icon.svg")}
             alt="StellarLaTeX"
             className="w-8 h-8"
           />

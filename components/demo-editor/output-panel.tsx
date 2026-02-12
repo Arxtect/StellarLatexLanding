@@ -69,7 +69,10 @@ export default function OutputPanel() {
                 },
             );
 
-            if (result.pdf) {
+            const hasPdf = Boolean(result.pdf);
+            const isCompileError = result.status !== 0 || result.result === "error";
+
+            if (hasPdf && result.pdf) {
                 // .slice() to get an exact-sized copy (Uint8Array.buffer may be larger)
                 setPdfBuffer(result.pdf.slice().buffer as ArrayBuffer);
                 setActiveTab("pdf");
@@ -78,8 +81,13 @@ export default function OutputPanel() {
                 setRawLog(result.log);
                 setParsedLog(parseLog(result.log));
             }
-            if (!result.pdf && result.log) {
+
+            // Some successful compiles may not emit a new PDF blob (for example: no-change/skip paths).
+            // In that case, keep showing the existing PDF instead of switching users to the log tab.
+            if (!hasPdf && isCompileError && result.log) {
                 setActiveTab("log");
+            } else if (!hasPdf && !isCompileError && pdfBuffer) {
+                setActiveTab("pdf");
             }
         } catch (err) {
             console.error("Compile failed", err);

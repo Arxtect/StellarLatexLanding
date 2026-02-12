@@ -49,7 +49,7 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <img
-                src={getPublicBasePath("/logo.svg")}
+                src={getPublicBasePath("/icon.svg")}
                 alt="StellarLaTeX"
                 className="w-7 h-7"
               />
