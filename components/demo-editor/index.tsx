@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 import { useAppStore, selectSelectedProjectPath } from "@/app/store";
 import { useDemoEditorStore } from "./store";
-import { loadZipProject, inferMainTexFile } from "@/lib/demo/zip-loader";
+import { loadZipProject, inferMainTexFile, detectEngineType } from "@/lib/demo/zip-loader";
 import EditorLayout from "./editor-layout";
 import FileExplorer from "./file-explorer";
 import OutputPanel from "./output-panel";
@@ -50,10 +50,11 @@ export default function DemoEditor() {
 
                 const paths = Object.keys(projectFiles);
                 const mainFile = inferMainTexFile(paths);
+                const engineType = detectEngineType(projectFiles);
 
                 setFiles(projectFiles);
                 setSelectedPath(mainFile);
-                setConfig({ mainFile });
+                setConfig({ mainFile, engineType });
 
                 // Expand only the folders leading to the main file
                 const mainParts = mainFile.split("/");

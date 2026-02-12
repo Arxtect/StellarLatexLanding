@@ -18,7 +18,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { useDemoEditorStore } from "@/components/demo-editor/store";
-import { loadZipFromArrayBuffer, inferMainTexFile } from "@/lib/demo/zip-loader";
+import { loadZipFromArrayBuffer, inferMainTexFile, detectEngineType } from "@/lib/demo/zip-loader";
 
 function getFileName(path: string): string {
 	const fileName = path.split("/").pop() ?? path;
@@ -52,10 +52,11 @@ export default function ProjectSelector() {
 			const projectFiles = await loadZipFromArrayBuffer(buf);
 			const paths = Object.keys(projectFiles);
 			const mainFile = inferMainTexFile(paths);
+			const engineType = detectEngineType(projectFiles);
 
 			setFiles(projectFiles);
 			setSelectedPath(mainFile);
-			setConfig({ mainFile });
+			setConfig({ mainFile, engineType });
 
 			// Expand root-level folders
 			const rootFolders = [

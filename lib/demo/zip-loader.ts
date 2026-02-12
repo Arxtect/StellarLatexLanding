@@ -154,3 +154,22 @@ export function inferMainTexFile(paths: string[]): string {
     );
     return rootTex[0] ?? paths.find((p) => p.endsWith(".tex")) ?? "main.tex";
 }
+
+/**
+ * Detect the engine type by scanning text file contents for XeTeX hints.
+ * Returns "xetex" if any text file contains `\usepackage{fontspec}` or
+ * Chinese characters (U+4E00–U+9FFF), otherwise "pdftex".
+ *
+ * Mirrors Hawking's `detectCompileConfig` / `checkForXeTexHint` logic.
+ */
+export function detectEngineType(
+    files: Record<string, DemoFile>,
+): "pdftex" | "xetex" {
+    const xetexHint = /\\usepackage\{fontspec\}|[\u4E00-\u9FFF]/;
+    for (const file of Object.values(files)) {
+        if (file.kind === "text" && xetexHint.test(file.content)) {
+            return "xetex";
+        }
+    }
+    return "pdftex";
+}
