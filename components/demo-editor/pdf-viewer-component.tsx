@@ -254,7 +254,8 @@ export default function PDFViewer() {
                 atBottomStateChange={setAtBottom}
                 atTopStateChange={setAtTop}
             />
-            <ScrollBar orientation="horizontal" />
+            <ScrollBar orientation="horizontal" thumbClassName="bg-gray-400" />
+            <ScrollBar orientation="vertical" thumbClassName="bg-gray-400" />
         </ScrollArea>
     );
 }
