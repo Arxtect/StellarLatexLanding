@@ -4,6 +4,7 @@ import "./globals.css";
 import { AppContextProvider } from "@/components/app-context";
 import { readdirSync } from "fs";
 import { Toaster } from "@/components/ui/sonner";
+import { getPublicBasePath } from "@/lib/utils";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   description:
     "Compile LaTeX documents instantly in the browser with StellarLatex. No installation required — powered by WebAssembly with full SyncTeX support.",
   icons: {
-    icon: "/icon.svg",
+    icon: getPublicBasePath("/icon.svg"),
   },
 };
 
@@ -37,7 +38,7 @@ export default function RootLayout({
         <AppContextProvider value={{ exampleProjectPaths: readdirSync("./public/examples").map((f) => `/examples/${f}`) }}>
           {children}
         </AppContextProvider>
-         <Toaster />
+        <Toaster />
       </body>
     </html>
   );
