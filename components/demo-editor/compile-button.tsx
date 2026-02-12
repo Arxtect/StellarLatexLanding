@@ -25,10 +25,10 @@ export default function CompileButton({
                 onClick={compiling ? onStopCompile : onCompile}
                 size="sm"
                 className={cn(
-                    "bg-orange-500 text-white font-medium rounded-r-none h-8 w-26",
+                    "bg-primary text-primary-foreground font-medium rounded-r-none h-8 w-26",
                     compiling
-                        ? "opacity-50 group-hover:bg-red-600! group-hover:opacity-100"
-                        : "hover:bg-orange-600",
+                        ? "opacity-50 group-hover:bg-destructive group-hover:text-destructive-foreground group-hover:opacity-100"
+                        : "hover:bg-primary/90",
                 )}
             >
                 {compiling ? (
@@ -48,10 +48,10 @@ export default function CompileButton({
                 <Button
                     size="sm"
                     className={cn(
-                        "h-8 px-2 rounded-l-none bg-orange-500 text-white",
+                        "h-8 px-2 rounded-l-none bg-primary text-primary-foreground",
                         compiling
-                            ? "group-hover:bg-red-600!"
-                            : "hover:bg-orange-600",
+                            ? "group-hover:bg-destructive group-hover:text-destructive-foreground"
+                            : "hover:bg-primary/90",
                     )}
                     disabled={compiling}
                     onClick={(e) => {

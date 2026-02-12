@@ -82,7 +82,7 @@ export default function ProjectSelector() {
 		<div className="flex items-center gap-2 w-full">
 			<Select value={selectedProjectPath} onValueChange={setSelectedProjectPath}>
 				<SelectTrigger className="w-full max-w-md">
-					<SelectValue placeholder="Select a project" />
+					<SelectValue placeholder="Select demo project" />
 				</SelectTrigger>
 				<SelectContent>
 					{exampleProjectPaths.map((path) => (
@@ -108,10 +108,10 @@ export default function ProjectSelector() {
 			<button
 				onClick={() => fileInputRef.current?.click()}
 				className="shrink-0 inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-3 py-2 text-sm font-medium hover:bg-muted transition-colors"
-				title="Upload a .zip project"
+				title="Import your project (.zip)"
 			>
 				<Upload size={14} />
-				<span className="hidden sm:inline">Upload</span>
+				<span className="hidden sm:inline">Import your project</span>
 			</button>
 		</div>
 	);

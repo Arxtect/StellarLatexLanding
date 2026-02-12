@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     "Compile LaTeX documents instantly in the browser with StellarLatex. No installation required — powered by WebAssembly with full SyncTeX support.",
   icons: {
-    icon: "/logo.svg",
+    icon: "/icon.svg",
   },
 };
 
