@@ -14,7 +14,7 @@ export type AppActions = {
 export type AppStore = AppState & AppActions;
 
 const initialState: AppState = {
-    selectedProjectPath: "/examples/basic.zip",
+    selectedProjectPath: "/examples/Basic Example.zip",
 };
 
 export const useAppStore = create<AppStore>()(

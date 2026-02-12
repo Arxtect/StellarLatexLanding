@@ -109,7 +109,7 @@ export default function HeroSection() {
         className="pointer-events-none absolute inset-0"
       >
         <div className="absolute inset-0 bg-[linear-gradient(rgba(128,128,128,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(128,128,128,0.03)_1px,transparent_1px)] bg-[size:64px_64px]" />
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-emerald-500/5 blur-[120px]" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px]" />
       </motion.div>
 
       <div className="relative mx-auto max-w-7xl px-6">
@@ -120,8 +120,8 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-4 py-1.5 text-xs font-medium text-emerald-400 mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-xs font-medium text-primary mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
               WebAssembly-Powered LaTeX Engine
             </span>
           </motion.div>
@@ -133,7 +133,7 @@ export default function HeroSection() {
             className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight"
           >
             Compile LaTeX{" "}
-            <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
               in the Browser
             </span>
           </motion.h1>
@@ -144,8 +144,8 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed"
           >
-            A production-ready LaTeX engine compiled to WebAssembly. No server
-            required, no installation needed. Embed full{" "}
+            A production-ready LaTeX engine compiled to WebAssembly. No compile
+            server needed — everything runs client-side. Embed full{" "}
             <code className="text-sm bg-muted px-1.5 py-0.5 rounded font-mono">
               pdftex
             </code>{" "}
@@ -164,7 +164,7 @@ export default function HeroSection() {
           >
             <a
               href="#demo"
-              className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-6 py-3 text-sm font-semibold text-white hover:bg-emerald-600 transition-colors shadow-lg shadow-emerald-500/20"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20"
             >
               Try Live Demo
               <svg
@@ -190,13 +190,13 @@ export default function HeroSection() {
           </motion.div>
 
           {/* Terminal-style install snippet */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.9 }}
             className="mt-8 inline-flex items-center gap-3 rounded-lg border border-border bg-muted/50 px-5 py-3 font-mono text-sm"
           >
-            <span className="text-emerald-400">$</span>
+            <span className="text-primary">$</span>
             <span className="text-muted-foreground">
               npm install stellar-latex
             </span>
@@ -218,7 +218,7 @@ export default function HeroSection() {
                 <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
               </svg>
             </button>
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* Feature grid */}
@@ -234,7 +234,7 @@ export default function HeroSection() {
             <motion.div
               key={feature.title}
               variants={cardVariants}
-              className="group relative rounded-xl border border-border bg-card/50 backdrop-blur-sm p-6 hover:border-emerald-500/30 transition-all duration-300"
+              className="group relative rounded-xl border border-border bg-card/50 backdrop-blur-sm p-6 hover:border-primary/30 transition-all duration-300"
             >
               <div
                 className={`inline-flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-br ${feature.accent} mb-4`}
@@ -248,7 +248,7 @@ export default function HeroSection() {
                 {feature.description}
               </p>
               {/* hover glow */}
-              <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-emerald-500/5 to-transparent" />
+              <div className="pointer-events-none absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-primary/5 to-transparent" />
             </motion.div>
           ))}
         </motion.div>

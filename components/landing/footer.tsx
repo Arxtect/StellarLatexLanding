@@ -54,7 +54,7 @@ export default function Footer() {
                 className="w-7 h-7"
               />
               <span className="text-sm font-bold font-mono tracking-tight">
-                Stellar<span className="text-emerald-400">LaTeX</span>
+                Stellar<span className="text-primary">LaTeX</span>
               </span>
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed max-w-[200px]">
@@ -122,7 +122,7 @@ export default function Footer() {
           </p>
           <div className="flex items-center gap-4 text-[11px] text-muted-foreground">
             <span className="inline-flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-primary" />
               Built with WebAssembly
             </span>
 

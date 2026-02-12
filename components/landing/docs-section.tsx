@@ -10,18 +10,19 @@ const CODE: Record<Tab, { filename: string; language: string; code: string }> = 
   "Quick Start": {
     filename: "install.sh",
     language: "bash",
-    code: `# Install the engine package
-npm install stellar-latex
+    code: `# Download the latest release from GitHub
+# https://github.com/Arxtect/StellarLatex/releases
 
-# The package ships two WASM engines:
+# The release ships two WASM engines:
 #   stellarlatexpdftex.js  + stellarlatexpdftex.wasm
 #   stellarlatexxetex.js   + stellarlatexxetex.wasm
 #
-# Copy the .js and .wasm files to your public/ directory
-# or configure your bundler to serve them as static assets.
+# Download and copy the .js and .wasm files to your public/ directory
 
-cp node_modules/stellar-latex/dist/*.js  public/stellar-latex/
-cp node_modules/stellar-latex/dist/*.wasm public/stellar-latex/`,
+mkdir -p public/stellar-latex/
+# Extract the release archive into your project
+cp stellar-latex-release/*.js   public/stellar-latex/
+cp stellar-latex-release/*.wasm public/stellar-latex/`,
   },
   "Engine API": {
     filename: "compile.ts",
@@ -138,7 +139,7 @@ function CodeBlock({ code, filename }: { code: string; filename: string }) {
       </div>
       {/* Code */}
       <pre className="p-4 overflow-x-auto text-sm leading-relaxed">
-        <code className="text-emerald-300/90 font-mono whitespace-pre">
+        <code className="text-primary/90 font-mono whitespace-pre">
           {code}
         </code>
       </pre>
@@ -162,12 +163,12 @@ export default function DocsSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-xs font-medium text-emerald-400 mb-4">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary mb-4">
             Documentation
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
             Get Started in{" "}
-            <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
               Minutes
             </span>
           </h2>
@@ -235,9 +236,9 @@ export default function DocsSection() {
           ].map((item) => (
             <div
               key={item.title}
-              className="rounded-lg border border-border bg-card/50 p-6 hover:border-emerald-500/30 transition-colors"
+              className="rounded-lg border border-border bg-card/50 p-6 hover:border-primary/30 transition-colors"
             >
-              <code className="text-[10px] text-emerald-400 font-mono bg-emerald-500/10 px-2 py-0.5 rounded">
+              <code className="text-[10px] text-primary font-mono bg-primary/10 px-2 py-0.5 rounded">
                 {item.tag}
               </code>
               <h3 className="mt-3 text-sm font-semibold">{item.title}</h3>

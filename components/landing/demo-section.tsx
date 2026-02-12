@@ -8,7 +8,7 @@ export default function DemoSection() {
   return (
     <section id="demo" className="relative py-24 overflow-hidden">
       {/* Section background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/[0.02] to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-6">
         {/* Section header */}
@@ -19,12 +19,12 @@ export default function DemoSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-8"
         >
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-xs font-medium text-emerald-400 mb-4">
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium text-primary mb-4">
             Interactive Demo
           </span>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
             Try It{" "}
-            <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-cyan-400 bg-clip-text text-transparent">
               Right Now
             </span>
           </h2>
@@ -40,8 +40,9 @@ export default function DemoSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex justify-center mb-4"
+          className="flex items-center justify-center gap-3 mb-4"
         >
+          <p className="text-sm text-muted-foreground">Select a demo project</p>
           <div className="w-full max-w-xs">
             <ProjectSelector />
           </div>
