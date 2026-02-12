@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { getPublicBasePath } from "@/lib/utils";
+import { getPublicBasePath, GITHUB_REPO_URL } from "@/lib/utils";
 
 const FOOTER_LINKS = {
   Product: [
@@ -12,17 +12,17 @@ const FOOTER_LINKS = {
   "Open Source": [
     {
       label: "GitHub Repository",
-      href: "https://github.com/nicholascz/nicholascz.github.io",
+      href: GITHUB_REPO_URL,
       external: true,
     },
     {
       label: "WASM Engine Source",
-      href: "https://github.com/nicholascz/nicholascz.github.io",
+      href: GITHUB_REPO_URL,
       external: true,
     },
     {
       label: "Issue Tracker",
-      href: "https://github.com/nicholascz/nicholascz.github.io/issues",
+      href: `${GITHUB_REPO_URL}/issues`,
       external: true,
     },
   ],
@@ -62,7 +62,7 @@ export default function Footer() {
             </p>
             <div className="flex items-center gap-3 mt-4">
               <a
-                href="https://github.com/nicholascz/nicholascz.github.io"
+                href={GITHUB_REPO_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { getPublicBasePath } from "@/lib/utils";
+import { getPublicBasePath, GITHUB_REPO_URL } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { label: "Features", href: "#features" },
@@ -58,7 +58,7 @@ export default function Header() {
             </a>
           ))}
           <a
-            href="https://github.com/nicholascz/nicholascz.github.io"
+            href={GITHUB_REPO_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-md border border-border bg-background/50 px-4 py-2 text-sm font-medium hover:bg-muted transition-colors"
