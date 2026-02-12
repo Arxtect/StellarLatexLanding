@@ -23,6 +23,7 @@ export default function DemoEditor() {
     const resetEditor = useDemoEditorStore((s) => s.resetEditor);
 
     const [loading, setLoading] = useState(false);
+    const [downloadProgress, setDownloadProgress] = useState(0);
     const loadedRef = useRef<string | null>(null);
 
     // Load zip project when selection changes
@@ -38,10 +39,12 @@ export default function DemoEditor() {
         let cancelled = false;
         const load = async () => {
             setLoading(true);
+            setDownloadProgress(0);
             resetEditor();
             try {
                 const projectFiles = await loadZipProject(
                     selectedProject,
+                    (progress) => setDownloadProgress(progress),
                 );
                 if (cancelled) return;
 
@@ -52,15 +55,13 @@ export default function DemoEditor() {
                 setSelectedPath(mainFile);
                 setConfig({ mainFile });
 
-                // Auto-expand root-level folders
-                const rootFolders = [
-                    ...new Set(
-                        paths
-                            .filter((p) => p.includes("/"))
-                            .map((p) => p.split("/")[0]),
-                    ),
-                ];
-                setExpandedKeys(rootFolders);
+                // Expand only the folders leading to the main file
+                const mainParts = mainFile.split("/");
+                const foldersToExpand: string[] = [];
+                for (let i = 1; i < mainParts.length; i++) {
+                    foldersToExpand.push(mainParts.slice(0, i).join("/"));
+                }
+                setExpandedKeys(foldersToExpand);
 
                 loadedRef.current = selectedProject;
             } catch (err) {
@@ -96,9 +97,16 @@ export default function DemoEditor() {
     if (loading) {
         return (
             <div className="flex items-center justify-center h-full text-muted-foreground">
-                <div className="flex flex-col items-center gap-2">
+                <div className="flex flex-col items-center gap-3 w-48">
                     <div className="h-6 w-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                    Loading project...
+                    <span>Loading project...</span>
+                    <div className="w-full h-1.5 rounded-full bg-muted overflow-hidden">
+                        <div
+                            className="h-full bg-primary rounded-full transition-all duration-200 ease-out"
+                            style={{ width: `${Math.round(downloadProgress * 100)}%` }}
+                        />
+                    </div>
+                    <span className="text-xs">{Math.round(downloadProgress * 100)}%</span>
                 </div>
             </div>
         );

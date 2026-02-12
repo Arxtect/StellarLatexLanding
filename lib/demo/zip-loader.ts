@@ -43,15 +43,51 @@ function isTextExtension(name: string): boolean {
 /**
  * Fetch a zip file from the public examples path and extract its contents
  * into a Record<string, DemoFile> suitable for the demo editor store.
+ *
+ * @param onProgress  Optional callback receiving a value between 0 and 1
+ *                    representing the download progress.
  */
 export async function loadZipProject(
     zipPath: string,
+    onProgress?: (progress: number) => void,
 ): Promise<Record<string, DemoFile>> {
     const resp = await fetch(getPublicBasePath(zipPath));
     if (!resp.ok)
         throw new Error(`Failed to fetch ${zipPath}: ${resp.status}`);
 
-    const buf = await resp.arrayBuffer();
+    const contentLength = resp.headers.get("Content-Length");
+    const total = contentLength ? parseInt(contentLength, 10) : 0;
+
+    let buf: ArrayBuffer;
+
+    if (total && resp.body) {
+        // Stream the response to track download progress
+        const reader = resp.body.getReader();
+        const chunks: Uint8Array[] = [];
+        let received = 0;
+
+         
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            chunks.push(value);
+            received += value.length;
+            onProgress?.(Math.min(received / total, 1));
+        }
+
+        const merged = new Uint8Array(received);
+        let offset = 0;
+        for (const chunk of chunks) {
+            merged.set(chunk, offset);
+            offset += chunk.length;
+        }
+        buf = merged.buffer;
+    } else {
+        // Fallback: no Content-Length available
+        buf = await resp.arrayBuffer();
+        onProgress?.(1);
+    }
+
     return loadZipFromArrayBuffer(buf);
 }
 
