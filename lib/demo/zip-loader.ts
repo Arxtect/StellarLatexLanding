@@ -148,7 +148,8 @@ function stripCommonRoot(path: string, allPaths: string[]): string {
  *
  * Mirrors Hawking's `FileIndex.getDefaultTexFilePath` behavior:
  * 1) Prefer `main.tex` when it exists and is non-empty.
- * 2) Otherwise pick the first `.tex` file containing `\begin{document}`.
+ * 2) Otherwise breadth-first search for the first `.tex` file containing
+ *    `\begin{document}`.
  * 3) Fallback to `main.tex`.
  */
 export function inferMainTexFile(files: Record<string, DemoFile>): string {
@@ -161,18 +162,49 @@ export function inferMainTexFile(files: Record<string, DemoFile>): string {
         return "main.tex";
     }
 
-    const texPaths = Object.keys(files)
-        .filter((path) => path.endsWith(".tex"))
-        .sort();
+    type TreeNode = {
+        path: string | null;
+        children: Map<string, TreeNode>;
+    };
+    const root: TreeNode = { path: null, children: new Map() };
 
-    for (const path of texPaths) {
-        const file = files[path];
-        if (
-            file.kind === "text" &&
-            file.content.length > 0 &&
-            file.content.includes("\\begin{document}")
-        ) {
-            return path;
+    // Build a path tree in insertion order, then scan it with BFS.
+    for (const path of Object.keys(files)) {
+        const segments = path.split("/").filter(Boolean);
+        if (segments.length === 0) continue;
+
+        let node = root;
+        for (let i = 0; i < segments.length; i++) {
+            const seg = segments[i];
+            let child = node.children.get(seg);
+            if (!child) {
+                child = { path: null, children: new Map() };
+                node.children.set(seg, child);
+            }
+            node = child;
+            if (i === segments.length - 1) {
+                node.path = path;
+            }
+        }
+    }
+
+    const queue: TreeNode[] = [root];
+    while (queue.length > 0) {
+        const node = queue.shift()!;
+        for (const child of node.children.values()) {
+            if (child.path && child.path.endsWith(".tex")) {
+                const file = files[child.path];
+                if (
+                    file.kind === "text" &&
+                    file.content.length > 0 &&
+                    file.content.includes("\\begin{document}")
+                ) {
+                    return child.path;
+                }
+            }
+            if (child.children.size > 0) {
+                queue.push(child);
+            }
         }
     }
 
