@@ -48,8 +48,7 @@ export default function DemoEditor() {
                 );
                 if (cancelled) return;
 
-                const paths = Object.keys(projectFiles);
-                const mainFile = inferMainTexFile(paths);
+                const mainFile = inferMainTexFile(projectFiles);
                 const engineType = detectEngineType(projectFiles);
 
                 setFiles(projectFiles);

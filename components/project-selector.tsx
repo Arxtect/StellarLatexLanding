@@ -51,7 +51,7 @@ export default function ProjectSelector() {
 			const buf = await file.arrayBuffer();
 			const projectFiles = await loadZipFromArrayBuffer(buf);
 			const paths = Object.keys(projectFiles);
-			const mainFile = inferMainTexFile(paths);
+			const mainFile = inferMainTexFile(projectFiles);
 			const engineType = detectEngineType(projectFiles);
 
 			setFiles(projectFiles);

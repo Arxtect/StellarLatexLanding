@@ -144,15 +144,39 @@ function stripCommonRoot(path: string, allPaths: string[]): string {
 }
 
 /**
- * Infer the main .tex file from a set of file paths.
- * Prefers "main.tex", then any root-level .tex file.
+ * Infer the main .tex file from project files.
+ *
+ * Mirrors Hawking's `FileIndex.getDefaultTexFilePath` behavior:
+ * 1) Prefer `main.tex` when it exists and is non-empty.
+ * 2) Otherwise pick the first `.tex` file containing `\begin{document}`.
+ * 3) Fallback to `main.tex`.
  */
-export function inferMainTexFile(paths: string[]): string {
-    if (paths.includes("main.tex")) return "main.tex";
-    const rootTex = paths.filter(
-        (p) => p.endsWith(".tex") && !p.includes("/"),
-    );
-    return rootTex[0] ?? paths.find((p) => p.endsWith(".tex")) ?? "main.tex";
+export function inferMainTexFile(files: Record<string, DemoFile>): string {
+    const mainTex = files["main.tex"];
+    if (
+        mainTex &&
+        mainTex.kind === "text" &&
+        mainTex.content.length > 0
+    ) {
+        return "main.tex";
+    }
+
+    const texPaths = Object.keys(files)
+        .filter((path) => path.endsWith(".tex"))
+        .sort();
+
+    for (const path of texPaths) {
+        const file = files[path];
+        if (
+            file.kind === "text" &&
+            file.content.length > 0 &&
+            file.content.includes("\\begin{document}")
+        ) {
+            return path;
+        }
+    }
+
+    return "main.tex";
 }
 
 /**
